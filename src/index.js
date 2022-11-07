@@ -1,17 +1,55 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import returnName from "./returnName.js";
+import CoffeeList from "./CoffeeList";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+function App(_props) {
+  const [counter, setCountrer] = useState(0);
+  const [color, setColor] = useState("black");
+  const allColor = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "lightblue",
+    "blue",
+    "violet"
+  ];
+  const allColorLength = allColor.length;
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  useEffect(
+    function doAfterChangeColor() {
+      console.log("useEffect worked");
+    },
+    [color]
+  );
+
+  function onButtonPress() {
+    setColor(allColor[counter % allColorLength]);
+    console.log("Hi", new Date());
+    console.log(allColor[counter % allColorLength], counter % allColorLength);
+    setCountrer(counter + 1);
+  }
+  const myStyle = {
+    backgroundColor: "beige",
+    padding: "5px",
+    paddingTop: "7px"
+  };
+
+  return (
+    <div style={myStyle}>
+      <p>{returnName("Hanna")}</p>
+      <p>Click on the button and change it's color. </p>
+      <p>You have clicked me {counter} times. </p>
+      <button style={{ color: [color] }} onClick={onButtonPress}>
+        Click Me 
+      </button>
+      <br />
+      
+      <CoffeeList/>
+    </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
